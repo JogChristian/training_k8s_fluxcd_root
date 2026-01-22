@@ -1,0 +1,37 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: develop
+servers: 1
+volumes:
+  - volume: $HOME/k3d/storage/server0:/var/lib/rancher/k3s/storage/
+    nodeFilters:
+      - server:0
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+  - port: 8080:8080
+    nodeFilters:
+      - loadbalancer
+registries:
+  create:
+    image: registry:2
+    name: k3d-registry.127.0.0.1.nip.io
+    host: 127.0.0.1
+    hostPort: "5000"
+    volumes:
+      - $HOME/k3d/registry:/var/lib/registry
+options:
+  k3d:
+    wait: true
+    timeout: "60s"
+  k3s:
+    extraArgs:
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
+

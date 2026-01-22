@@ -1,0 +1,12 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: flux
+spec:
+  interval: 1m0s
+  ref:
+    branch: main
+  secretRef:
+    name: git-pull-secret
+  url: ssh://git@github.com/[DEIN GITHUBACCOUNTNAME]/[DEIN REPO].git

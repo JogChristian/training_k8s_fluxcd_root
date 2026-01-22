@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: demo
+
+resources:
+- ../../base/namespace
+- git-pull-secret.yaml
+- age-key-secret.yaml
+- tls-secret.yaml
+
+patches:
+# * Hier soll nun die GitRepository Url angepasst werden
+# * Auch die Flux Kustomization soll angepasst werden. Hier muss der Pfad angepasst werden
