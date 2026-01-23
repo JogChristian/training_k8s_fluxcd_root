@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - helm-release.yaml
 - helm-repository.yaml
+- namespace.yaml
 
 configMapGenerator:
   - name: traefik-values-config
