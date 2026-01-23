@@ -9,3 +9,4 @@ resources:
   - flux-components.yaml
   - flux-sync.yaml
   - infrastructure.yaml
+  - teams.yaml
