@@ -7,8 +7,23 @@ resources:
 - ../../base/namespace
 - git-pull-secret.yaml
 - age-key-secret.yaml
-- tls-secret.yaml
 
 patches:
-# * Hier soll nun die GitRepository Url angepasst werden
-# * Auch die Flux Kustomization soll angepasst werden. Hier muss der Pfad angepasst werden
+- patch: |
+    - op: replace
+      path: /spec/url
+      value: ssh://git@github.com/jambit-k8s-training/training_k8s_fluxcd_namespace_demo.git
+      # Der Nachfolgende Patch ist in der Regel nicht nötig und sollte bei euch entfernt werden
+    - op: replace
+      path: /spec/ref/branch
+      value: complete
+  target:
+    kind: GitRepository
+    name: flux
+- patch: |
+    - op: replace
+      path: /spec/path
+      value: ./fluxcd/local
+  target:
+    kind: Kustomization
+    name: flux
