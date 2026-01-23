@@ -130,6 +130,36 @@ Wenn ihr die Secret Datei habt, legt diese in das GitRepo unter fluxcd/clusters/
 
   Ihr findet auch hier Infos: https://fluxcd.io/flux/components/source/helmrepositories/ und https://fluxcd.io/flux/components/helm/helmreleases/
 
+  Es gibt hier zwei grundsätzlich unterschiedliche Wege, die Values zu definieren. Ihr könnt sie entweder direkt inline im HelmRelease angeben oder über eine ConfigMap und/oder ein Secret referenzieren. Der Inline-Weg ist für den Einstieg einfacher und schneller umzusetzen. Der Ansatz über ConfigMap und Secret ist jedoch in der Praxis meist die bessere Wahl – insbesondere, wenn man sich Gedanken darüber macht, wo und wie Konfigurationswerte langfristig gepflegt werden sollen.
+
+  Dabei stellt sich auch die Frage, ob die Values im base-Verzeichnis oder im local-Verzeichnis definiert werden sollten. Das hängt davon ab, ob es sich um umgebungsspezifische Konfigurationen handelt oder um Werte, die in allen Umgebungen identisch sind.
+
+  Entscheidet ihr euch für den Weg über ConfigMap und Secret, gibt es eine Besonderheit zu beachten: Die Custom Resources von Flux (z. B. HelmRelease) werden von Kustomize nicht automatisch korrekt verarbeitet, wenn ConfigMapGenerator oder SecretGenerator verwendet werden. Konkret weiß Kustomize in diesem Fall nicht, an welchen Stellen der Name der generierten ConfigMap bzw. des Secrets im HelmRelease angepasst werden muss.
+
+  Dieses Verhalten lässt sich jedoch konfigurieren. Da dies leider nicht besonders gut dokumentiert ist, wird das Vorgehen hier explizit beschrieben.
+
+  Fügt hierzu in die kustomization.yaml folgendes hinzu:
+
+  ```
+  configurations:
+    - kustomizeconfig.yaml
+  ```
+  
+  Jetzt muss noch die Datei `kustomizeconfig.yaml` mit folgendem Inhalt angelegt werden:
+
+  ```
+  nameReference:
+    - kind: ConfigMap
+      version: v1
+      fieldSpecs:
+        - path: spec/valuesFrom/name
+          kind: HelmRelease
+    - kind: Secret
+      version: v1
+      fieldSpecs:
+        - path: spec/valuesFrom/name
+          kind: HelmRelease  
+  ``` 
 
 * Nun suchen wir die aktuelle Version des ingress-Helm-Charts heraus und pinnen diese. Wo würdet ihr das Pinning hinschreiben: base/traefik oder local/traefik? Warum?
 
