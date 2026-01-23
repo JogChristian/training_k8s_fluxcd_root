@@ -7,10 +7,10 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: main
+    branch: complete
   secretRef:
     name: git-pull-secret
-  url: ssh://git@github.com/[DEIN GITHUBACCOUNTNAME]/[DEIN REPO].git
+  url: ssh://git@github.com/jambit-k8s-training/training_k8s_fluxcd_root.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
