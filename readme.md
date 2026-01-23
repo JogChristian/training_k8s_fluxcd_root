@@ -5,7 +5,8 @@
 * Forkt bitte die Git-Repositories  
   https://github.com/jambit-k8s-training/training_k8s_fluxcd_root und  
   https://github.com/jambit-k8s-training/training_k8s_fluxcd_namespace_demo
-* Klont beide geforkten Repositories.
+  Bitte achtet darauf, dass ich beim forken, alle branches mitnehmt. 
+* Klont beide geforkten Repositories. [Hier](ssh_keys_per_gitrepo.md) wird beschrieben wie das mit eigenem SSH-Key funktioniert.
 * Wir arbeiten zunächst im geforkten **training_k8s_fluxcd_root** Repository.
 
 ## Fluxcd Bootstrap
