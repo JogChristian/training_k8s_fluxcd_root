@@ -8,3 +8,4 @@ resources:
   - git-pull-secret.yaml
   - flux-components.yaml
   - flux-sync.yaml
+  - infrastructure.yaml

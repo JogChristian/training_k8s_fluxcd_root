@@ -5,3 +5,19 @@ namespace: traefik
 
 resources:
   - ../../base/traefik
+  - tls-secret.yaml
+
+patches:
+  - patch: |
+      - op: add
+        path: /spec/chart/spec/version
+        value: v38.0.2
+    target:
+      kind: HelmRelease
+      name: traefik
+
+configMapGenerator:
+  - name: traefik-values-config
+    behavior: replace
+    files:
+    - values.yaml
